@@ -104,9 +104,7 @@ exports.addCity = (req, res, next) => {
             message: 'Failed to fetch the City'
           });
           throw Error(error);
-        })
-
-      
+        })      
     })
     .catch(error => {
       res.status(500).json({
@@ -136,6 +134,11 @@ exports.updateCity = (req, res, next) => {
           if (!cityWithCountryCitiesData) {
             return res.status(404).json({
               message: 'City with provided id does\'t exist'
+            });
+          };
+          if (cityWithCountryCitiesData.isCapital){
+            return res.status(403).json({
+              message: 'The City is a capital. Updating is not allowed'
             });
           };
           const citiesArray = cityWithCountryCitiesData.country.cities.filter(cityIdinArray => {
