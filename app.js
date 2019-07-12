@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+require('dotenv').config();
+
 const regionRoutes = require('./routes/region');
 const countryRoutes = require('./routes/country');
 const cityRoutes = require('./routes/city');
@@ -24,7 +26,7 @@ app.use('/city', cityRoutes);
 
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect('mongodb+srv://AngUser:X8HC2SMzIgwgGkHg@cluster0-p1nio.mongodb.net/test?retryWrites=true', {useNewUrlParser: true, useFindAndModify: false})
+mongoose.connect(`mongodb+srv://${process.env.DB_PROJECT}:${process.env.DB_PASS}@cluster0-p1nio.mongodb.net/test?retryWrites=true`, {useNewUrlParser: true, useFindAndModify: false})
   .then(result => {
     app.listen("3000");
   })
